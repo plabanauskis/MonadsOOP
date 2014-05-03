@@ -1,6 +1,6 @@
 ﻿namespace Monads
 {
-    static class Function
+    public static class Function
     {
         public delegate T OnDemand<T>();
     }
