@@ -21,5 +21,17 @@ namespace Monads
                 return new Nullable<R>();
             }
         }
+
+        static Lazy<R> ApplyFunction<A, R>(
+            Lazy<A> lazy,
+            Func<A, R> function)
+        {
+            return new Lazy<R>(() =>
+            {
+                A unwrapped = lazy.Value;
+                R result = function(unwrapped);
+                return result;
+            });
+        }
     }
 }
