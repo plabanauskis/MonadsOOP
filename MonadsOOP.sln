@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{83291D21-3970-45C5-81A9-5A0D70F757A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monads", "Monads\Monads.csproj", "{68F522D3-18C7-4218-AD63-F5CD5FA3F9EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83291D21-3970-45C5-81A9-5A0D70F757A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83291D21-3970-45C5-81A9-5A0D70F757A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83291D21-3970-45C5-81A9-5A0D70F757A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83291D21-3970-45C5-81A9-5A0D70F757A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68F522D3-18C7-4218-AD63-F5CD5FA3F9EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68F522D3-18C7-4218-AD63-F5CD5FA3F9EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68F522D3-18C7-4218-AD63-F5CD5FA3F9EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68F522D3-18C7-4218-AD63-F5CD5FA3F9EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
