@@ -45,6 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleApplication.cs" />
     <Compile Include="SimpleApplicationForInt32.cs" />
+    <Compile Include="SimpleFunctionComposition.cs" />
     <Compile Include="SimpleWrappers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
