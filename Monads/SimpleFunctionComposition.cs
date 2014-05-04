@@ -22,5 +22,7 @@ namespace Monads
         public static Func<int, long> cube = x => (long)x * x * x;
         public static Func<long, double> halve = y => y / 2.0;
         public static Func<int, double> both = z => halve(cube(z));
+
+        public static Func<int, double> bothComposed = FunctionComposition.Compose(cube, halve);
     }
 }
