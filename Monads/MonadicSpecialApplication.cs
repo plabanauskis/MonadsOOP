@@ -6,17 +6,17 @@ namespace Monads
 {
     public static class MonadicSpecialApplication
     {
-        static Nullable<R> ApplySpecialFunction<A, R>(
+        public static Nullable<R> ApplySpecialFunction<A, R>(
             Nullable<A> nullable,
-            Func<A, R> function)
+            Func<A, Nullable<R>> function)
             where A : struct
             where R : struct
         {
             if (nullable.HasValue)
             {
                 A unwrapped = nullable.Value;
-                R result = function(unwrapped);
-                return new Nullable<R>(result);
+                Nullable<R> result = function(unwrapped);
+                return result;
             }
             else
             {
@@ -24,47 +24,50 @@ namespace Monads
             }
         }
 
-        static Lazy<R> ApplySpecialFunction<A, R>(
+        public static Monads.Function.OnDemand<R> ApplySpecialFunction<A, R>(
+            Monads.Function.OnDemand<A> onDemand,
+            Func<A, Monads.Function.OnDemand<R>> function)
+        {
+            return () =>
+                {
+                    A unwrapped = onDemand();
+                    Monads.Function.OnDemand<R> result = function(unwrapped);
+                    return result();
+                };
+        }
+
+        public static Lazy<R> ApplyFunction<A, R>(
             Lazy<A> lazy,
-            Func<A, R> function)
+            Func<A, Lazy<R>> function)
         {
             return new Lazy<R>(() =>
             {
                 A unwrapped = lazy.Value;
-                R result = function(unwrapped);
-                return result;
+                Lazy<R> result = function(unwrapped);
+                return result.Value;
             });
         }
 
-        static Monads.Function.OnDemand<R> ApplySpecialFunction<A, R>(
-            Monads.Function.OnDemand<A> onDemand,
-            Func<A, R> function)
-        {
-            return () =>
-            {
-                A unwrapped = onDemand();
-                R result = function(unwrapped);
-                return result;
-            };
-        }
-
-        static async Task<R> ApplySpecialFunction<A, R>(
+        public static async Task<R> ApplySpecialFunction<A, R>(
             Task<A> task,
-            Func<A, R> function)
+            Func<A, Task<R>> function)
         {
             A unwrapped = await task;
-            R result = function(unwrapped);
-            return result;
+            Task<R> result = function(unwrapped);
+            return await result;
         }
 
-        static IEnumerable<R> ApplySpecialFunction<A, R>(
+        public static IEnumerable<R> ApplySpecialFunction<A, R>(
             IEnumerable<A> sequence,
-            Func<A, R> function)
+            Func<A, IEnumerable<R>> function)
         {
             foreach (A unwrapped in sequence)
             {
-                R result = function(unwrapped);
-                yield return result;
+                IEnumerable<R> result = function(unwrapped);
+                foreach (R r in result)
+                {
+                    yield return r;
+                }
             }
         }
     }

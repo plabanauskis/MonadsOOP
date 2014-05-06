@@ -6,17 +6,17 @@ namespace Monads
 {
     public static class MonadicApplication
     {
-        public static Nullable<R> ApplyFunction<A, R>(
+        static Nullable<R> ApplyFunction<A, R>(
             Nullable<A> nullable,
-            Func<A, Nullable<R>> function)
+            Func<A, R> function)
             where A : struct
             where R : struct
         {
             if (nullable.HasValue)
             {
                 A unwrapped = nullable.Value;
-                Nullable<R> result = function(unwrapped);
-                return result;
+                R result = function(unwrapped);
+                return new Nullable<R>(result);
             }
             else
             {
@@ -24,50 +24,47 @@ namespace Monads
             }
         }
 
-        public static Monads.Function.OnDemand<R> ApplyFunction<A, R>(
-            Monads.Function.OnDemand<A> onDemand,
-            Func<A, Monads.Function.OnDemand<R>> function)
-        {
-            return () =>
-                {
-                    A unwrapped = onDemand();
-                    Monads.Function.OnDemand<R> result = function(unwrapped);
-                    return result();
-                };
-        }
-
-        public static Lazy<R> ApplyFunction<A, R>(
+        static Lazy<R> ApplyFunction<A, R>(
             Lazy<A> lazy,
-            Func<A, Lazy<R>> function)
+            Func<A, R> function)
         {
             return new Lazy<R>(() =>
             {
                 A unwrapped = lazy.Value;
-                Lazy<R> result = function(unwrapped);
-                return result.Value;
+                R result = function(unwrapped);
+                return result;
             });
         }
 
-        public static async Task<R> ApplyFunction<A, R>(
-            Task<A> task,
-            Func<A, Task<R>> function)
+        static Monads.Function.OnDemand<R> ApplyFunction<A, R>(
+            Monads.Function.OnDemand<A> onDemand,
+            Func<A, R> function)
         {
-            A unwrapped = await task;
-            Task<R> result = function(unwrapped);
-            return await result;
+            return () =>
+            {
+                A unwrapped = onDemand();
+                R result = function(unwrapped);
+                return result;
+            };
         }
 
-        public static IEnumerable<R> ApplyFunction<A, R>(
+        static async Task<R> ApplyFunction<A, R>(
+            Task<A> task,
+            Func<A, R> function)
+        {
+            A unwrapped = await task;
+            R result = function(unwrapped);
+            return result;
+        }
+
+        static IEnumerable<R> ApplyFunction<A, R>(
             IEnumerable<A> sequence,
-            Func<A, IEnumerable<R>> function)
+            Func<A, R> function)
         {
             foreach (A unwrapped in sequence)
             {
-                IEnumerable<R> result = function(unwrapped);
-                foreach (R r in result)
-                {
-                    yield return r;
-                }
+                R result = function(unwrapped);
+                yield return result;
             }
         }
     }

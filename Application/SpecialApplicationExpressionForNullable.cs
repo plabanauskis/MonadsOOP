@@ -17,7 +17,7 @@ namespace Application
             where A : struct
             where R : struct
         {
-            return MonadicApplication.ApplyFunction<A, R>(nullable, (unwrapped) => CreateSimpleNullable<R>(function(unwrapped)));
+            return MonadicSpecialApplication.ApplySpecialFunction<A, R>(nullable, (unwrapped) => CreateSimpleNullable<R>(function(unwrapped)));
         }
     }
 }

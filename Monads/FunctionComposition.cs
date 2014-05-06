@@ -10,5 +10,14 @@ namespace Monads
         {
             return x => g(f(x));
         }
+
+        public static Func<X, Nullable<Z>> ComposeSpecial<X, Y, Z>(
+            Func<X, Nullable<Y>> f,
+            Func<Y, Nullable<Z>> g)
+            where Y : struct
+            where Z : struct
+        {
+            return x => MonadicSpecialApplication.ApplySpecialFunction(f(x), g);
+        }
     }
 }
