@@ -14,6 +14,7 @@ namespace Monads
                     yield return innerItem;
         }
 
+        // TODO: should not be public.
         public static IEnumerable<T> WhereHelper<T>(
             T item,
             Func<T, bool> predicate)
@@ -29,7 +30,7 @@ namespace Monads
             return items.SelectMany(item => WhereHelper(item, predicate));
         }
 
-        public static IEnumerable<R> SelectHelper<A, R>(
+        private static IEnumerable<R> SelectHelper<A, R>(
             A item,
             Func<A, R> projection)
         {
@@ -41,6 +42,22 @@ namespace Monads
             Func<A, R> projection)
         {
             return items.SelectMany(item => SelectHelper(item, projection));
+        }
+
+        public static IEnumerable<R> Join<A, TInner, TKey, R>(
+            this IEnumerable<A> outer,
+            IEnumerable<TInner> inner,
+            Func<A, TKey> outerKeySelector,
+            Func<TInner, TKey> innerKeySelector,
+            Func<A, TInner, R> resultSelector
+            )
+        {
+            return outer.SelectMany(o =>
+                {
+                    var matchedInners = inner.Where(i => innerKeySelector(i).Equals(outerKeySelector(o)));
+
+                    return matchedInners.Select(i => resultSelector(o, i));
+                });
         }
     }
 }
