@@ -42,6 +42,7 @@
     <Compile Include="Function.cs" />
     <Compile Include="FunctionComposition.cs" />
     <Compile Include="Logged.cs" />
+    <Compile Include="Maybe.cs" />
     <Compile Include="MonadicApplication.cs" />
     <Compile Include="MonadicSpecialApplication.cs" />
     <Compile Include="NoThrow.cs" />
